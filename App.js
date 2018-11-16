@@ -4,11 +4,30 @@ import { Button } from 'react-native-elements';
 
 export default class App extends Component {
   _handleButtonPress = () => {
-    Alert.alert(
-      'Button pressed!',
-      'You did it!',
-    );
+    this.sendEmail()
   };
+
+   sendEmail(){
+    return fetch('https://api.myjson.com/bins/w8jte')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.movies,
+        }, function(){
+          Alert.alert(
+            'API OK'
+          );
+        });
+
+      })
+      .catch((error) =>{
+        Alert.alert(
+          'API Error'
+        );
+      });
+  }
 
   render() {
     return (
