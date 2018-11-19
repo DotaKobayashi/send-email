@@ -7,26 +7,17 @@ export default class App extends Component {
     this.sendEmail()
   };
 
-   sendEmail(){
+  sendEmail(){
     return fetch('https://api.myjson.com/bins/w8jte')
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.movies,
-        }, function(){
-          Alert.alert(
-            'API OK'
-          );
-        });
-
+      .then((response) => {
+        if (response.ok) Alert.alert('送信しました')
+        else this.errorMessage()
       })
-      .catch((error) =>{
-        Alert.alert(
-          'API Error'
-        );
-      });
+      .catch((error) => this.errorMessage());
+  }
+
+  errorMessage() {
+    Alert.alert('送信に失敗しました')
   }
 
   render() {
